@@ -1,4 +1,12 @@
 export interface AdminConfig {
+  // 配置订阅（注意字段名沿用官方拼写 Subscribtion）
+  ConfigSubscribtion?: {
+    URL: string;
+    AutoUpdate: boolean;
+    LastCheck: string;
+  };
+  // 最近一次成功拉取并应用的订阅配置原文（JSON 字符串）
+  ConfigFile?: string;
   SiteConfig: {
     SiteName: string;
     Announcement: string;

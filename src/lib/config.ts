@@ -48,6 +48,23 @@ export const API_CONFIG = {
 let fileConfig: ConfigFileStruct;
 let cachedConfig: AdminConfig;
 
+// 为旧配置补全订阅相关字段（数据库中已存在的配置没有这些字段）
+function ensureSubscriptionFields(config: AdminConfig): AdminConfig {
+  if (!config.ConfigSubscribtion) {
+    config.ConfigSubscribtion = { URL: '', AutoUpdate: false, LastCheck: '' };
+  }
+  if (config.ConfigFile === undefined) {
+    config.ConfigFile = '';
+  }
+  return config;
+}
+
+const DEFAULT_SUBSCRIPTION = {
+  URL: '',
+  AutoUpdate: false,
+  LastCheck: '',
+};
+
 async function initConfig() {
   if (cachedConfig) {
     return;
@@ -94,6 +111,9 @@ async function initConfig() {
       const customCategories = fileConfig.custom_category || [];
 
       if (adminConfig) {
+        // 补全订阅字段（兼容旧配置）
+        adminConfig = ensureSubscriptionFields(adminConfig);
+
         // 补全 SourceConfig
         const sourceConfigMap = new Map(
           (adminConfig.SourceConfig || []).map((s) => [s.key, s])
@@ -191,6 +211,8 @@ async function initConfig() {
           });
         }
         adminConfig = {
+          ConfigSubscribtion: { ...DEFAULT_SUBSCRIPTION },
+          ConfigFile: '',
           SiteConfig: {
             SiteName: process.env.SITE_NAME || 'MoonTV',
             Announcement:
@@ -239,6 +261,8 @@ async function initConfig() {
   } else {
     // 本地存储直接使用文件配置
     cachedConfig = {
+      ConfigSubscribtion: { ...DEFAULT_SUBSCRIPTION },
+      ConfigFile: '',
       SiteConfig: {
         SiteName: process.env.SITE_NAME || 'MoonTV',
         Announcement:
@@ -293,6 +317,9 @@ export async function getConfig(): Promise<AdminConfig> {
     if (!adminConfig.CustomCategories) {
       adminConfig.CustomCategories = [];
     }
+
+    // 补全订阅字段（兼容旧配置）
+    adminConfig = ensureSubscriptionFields(adminConfig);
 
     // 合并一些环境变量配置
     adminConfig.SiteConfig.SiteName = process.env.SITE_NAME || 'MoonTV';
@@ -428,6 +455,8 @@ export async function resetConfig() {
     });
   }
   const adminConfig = {
+    ConfigSubscribtion: { ...DEFAULT_SUBSCRIPTION },
+    ConfigFile: '',
     SiteConfig: {
       SiteName: process.env.SITE_NAME || 'MoonTV',
       Announcement:

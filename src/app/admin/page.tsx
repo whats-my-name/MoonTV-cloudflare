@@ -25,6 +25,7 @@ import {
   ChevronDown,
   ChevronUp,
   FolderOpen,
+  Link2,
   Settings,
   Users,
   Video,
@@ -1686,6 +1687,130 @@ const SiteConfigComponent = ({ config }: { config: AdminConfig | null }) => {
   );
 };
 
+// 配置订阅组件：设置订阅地址、手动拉取、开启自动更新
+const ConfigSubscription = ({
+  config,
+  refreshConfig,
+}: {
+  config: AdminConfig | null;
+  refreshConfig: () => Promise<void>;
+}) => {
+  const [url, setUrl] = useState(config?.ConfigSubscribtion?.URL || '');
+  const [autoUpdate, setAutoUpdate] = useState(
+    config?.ConfigSubscribtion?.AutoUpdate || false
+  );
+  const [fetching, setFetching] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const lastCheck = config?.ConfigSubscribtion?.LastCheck;
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch('/api/admin/config_subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ URL: url, AutoUpdate: autoUpdate }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || '保存失败');
+      showSuccess('订阅配置已保存');
+      await refreshConfig();
+    } catch (err) {
+      showError(err instanceof Error ? err.message : '保存失败');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleFetch = async () => {
+    if (!url.trim()) {
+      showError('请先填写订阅 URL');
+      return;
+    }
+    setFetching(true);
+    try {
+      const response = await fetch('/api/admin/config_subscription/fetch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || '拉取失败');
+      showSuccess(data.message || '拉取成功');
+      await refreshConfig();
+    } catch (err) {
+      showError(err instanceof Error ? err.message : '拉取失败');
+    } finally {
+      setFetching(false);
+    }
+  };
+
+  return (
+    <div className='space-y-4'>
+      <div>
+        <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+          订阅 URL
+        </label>
+        <input
+          type='text'
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder='https://example.com/subscribe?format=2'
+          className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm'
+        />
+        <p className='mt-1 text-xs text-gray-500 dark:text-gray-400'>
+          输入配置文件订阅地址，要求 JSON 格式且使用 Base58 编码。
+        </p>
+      </div>
+
+      <div className='flex items-center gap-3'>
+        <button
+          onClick={handleFetch}
+          disabled={fetching}
+          className='px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm rounded-lg transition-colors'
+        >
+          {fetching ? '拉取中…' : '拉取配置'}
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className='px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-sm rounded-lg transition-colors'
+        >
+          {saving ? '保存中…' : '保存设置'}
+        </button>
+        {lastCheck && (
+          <span className='text-xs text-gray-500 dark:text-gray-400'>
+            最后更新：{new Date(lastCheck).toLocaleString('zh-CN')}
+          </span>
+        )}
+      </div>
+
+      <div className='flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700'>
+        <input
+          id='subscription-autoupdate'
+          type='checkbox'
+          checked={autoUpdate}
+          onChange={(e) => setAutoUpdate(e.target.checked)}
+          className='mt-1 w-4 h-4'
+        />
+        <div>
+          <label
+            htmlFor='subscription-autoupdate'
+            className='text-sm font-medium text-gray-800 dark:text-gray-200 cursor-pointer'
+          >
+            自动更新
+          </label>
+          <p className='text-xs text-gray-500 dark:text-gray-400'>
+            启用后，系统将通过定时任务定期（最快每小时一次）自动拉取最新配置。
+            修改后请先点击「保存设置」。
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function AdminPageClient() {
   const [config, setConfig] = useState<AdminConfig | null>(null);
   const [loading, setLoading] = useState(true);
@@ -1696,6 +1821,7 @@ function AdminPageClient() {
     videoSource: false,
     siteConfig: false,
     categoryConfig: false,
+    configSubscription: false,
   });
 
   // 获取管理员配置
@@ -1867,6 +1993,26 @@ function AdminPageClient() {
             >
               <CategoryConfig config={config} refreshConfig={fetchConfig} />
             </CollapsibleTab>
+
+            {/* 配置订阅标签（仅站长可见） */}
+            {role === 'owner' && config && (
+              <CollapsibleTab
+                title='配置订阅'
+                icon={
+                  <Link2
+                    size={20}
+                    className='text-gray-600 dark:text-gray-400'
+                  />
+                }
+                isExpanded={expandedTabs.configSubscription}
+                onToggle={() => toggleTab('configSubscription')}
+              >
+                <ConfigSubscription
+                  config={config}
+                  refreshConfig={fetchConfig}
+                />
+              </CollapsibleTab>
+            )}
           </div>
         </div>
       </div>

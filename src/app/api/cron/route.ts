@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
 import { fetchVideoDetail } from '@/lib/fetchVideoDetail';
+import { autoUpdateSubscription } from '@/lib/subscription';
 import { SearchResult } from '@/lib/types';
 
 export async function GET(request: NextRequest) {
@@ -11,11 +12,16 @@ export async function GET(request: NextRequest) {
   try {
     console.log('Cron job triggered:', new Date().toISOString());
 
-    refreshRecordAndFavorites();
+    // 自动拉取配置订阅（内部有 1 小时间隔与开关判断）
+    const subscriptionResult = await autoUpdateSubscription();
+    console.log('订阅自动更新:', subscriptionResult.message);
+
+    await refreshRecordAndFavorites();
 
     return NextResponse.json({
       success: true,
       message: 'Cron job executed successfully',
+      subscription: subscriptionResult.message,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
