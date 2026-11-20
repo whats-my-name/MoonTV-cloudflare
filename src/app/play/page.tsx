@@ -1742,7 +1742,7 @@ function PlayPageClient() {
 
   return (
     <PageLayout activePath='/play'>
-      <div className='flex flex-col gap-3 py-4 px-5 lg:px-[3rem] 2xl:px-20'>
+      <div className='flex flex-col gap-3 py-4 px-3 sm:px-5 lg:px-[3rem] 2xl:px-20'>
         {/* 第一行：影片标题 */}
         <div className='py-1'>
           <h1 className='text-xl font-semibold text-gray-900 dark:text-gray-100'>
@@ -1810,7 +1810,7 @@ function PlayPageClient() {
                 isEpisodeSelectorCollapsed ? 'col-span-1' : 'md:col-span-3'
               }`}
             >
-              <div className='relative w-full h-[300px] lg:h-full'>
+              <div className='relative w-full aspect-video lg:aspect-auto lg:h-full'>
                 <div
                   ref={artRef}
                   className='bg-black w-full h-full rounded-xl overflow-hidden shadow-lg'
@@ -1858,7 +1858,7 @@ function PlayPageClient() {
 
             {/* 选集和换源 - 在移动端始终显示，在 lg 及以上可折叠 */}
             <div
-              className={`h-[300px] lg:h-full md:overflow-hidden transition-all duration-300 ease-in-out ${
+              className={`h-[40vh] max-h-[360px] lg:h-full md:overflow-hidden transition-all duration-300 ease-in-out ${
                 isEpisodeSelectorCollapsed
                   ? 'md:col-span-1 lg:hidden lg:opacity-0 lg:scale-95'
                   : 'md:col-span-1 lg:opacity-100 lg:scale-100'

@@ -368,7 +368,7 @@ export default function VideoCard({
       {/* 标题与来源 */}
       <div className='mt-2 text-center'>
         <div className='relative'>
-          <span className='block text-sm font-semibold truncate text-gray-900 dark:text-gray-100 transition-colors duration-300 ease-in-out group-hover:text-green-600 dark:group-hover:text-green-400 peer'>
+          <span className='block text-xs sm:text-sm font-semibold truncate text-gray-900 dark:text-gray-100 transition-colors duration-300 ease-in-out group-hover:text-green-600 dark:group-hover:text-green-400 peer'>
             {actualTitle}
           </span>
           {/* 自定义 tooltip */}

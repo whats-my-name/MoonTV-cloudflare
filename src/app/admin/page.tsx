@@ -463,25 +463,25 @@ const UserConfig = ({ config, role, refreshConfig }: UserConfigProps) => {
               <tr>
                 <th
                   scope='col'
-                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
+                  className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
                 >
                   用户名
                 </th>
                 <th
                   scope='col'
-                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
+                  className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
                 >
                   角色
                 </th>
                 <th
                   scope='col'
-                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
+                  className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
                 >
                   状态
                 </th>
                 <th
                   scope='col'
-                  className='px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
+                  className='px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'
                 >
                   操作
                 </th>
@@ -526,10 +526,10 @@ const UserConfig = ({ config, role, refreshConfig }: UserConfigProps) => {
                         key={user.username}
                         className='hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
                       >
-                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100'>
+                        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100'>
                           {user.username}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap'>
+                        <td className='px-3 sm:px-6 py-4 whitespace-nowrap'>
                           <span
                             className={`px-2 py-1 text-xs rounded-full ${
                               user.role === 'owner'
@@ -546,7 +546,7 @@ const UserConfig = ({ config, role, refreshConfig }: UserConfigProps) => {
                               : '普通用户'}
                           </span>
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap'>
+                        <td className='px-3 sm:px-6 py-4 whitespace-nowrap'>
                           <span
                             className={`px-2 py-1 text-xs rounded-full ${
                               !user.banned
@@ -557,7 +557,7 @@ const UserConfig = ({ config, role, refreshConfig }: UserConfigProps) => {
                             {!user.banned ? '正常' : '已封禁'}
                           </span>
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
+                        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
                           {/* 修改密码按钮 */}
                           {canChangePassword && (
                             <button
@@ -783,25 +783,25 @@ const VideoSourceConfig = ({
         >
           <GripVertical size={16} />
         </td>
-        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
           {source.name}
         </td>
-        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
           {source.key}
         </td>
         <td
-          className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 max-w-[12rem] truncate'
+          className='hidden px-3 sm:px-6 md:table-cell py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 max-w-[12rem] truncate'
           title={source.api}
         >
           {source.api}
         </td>
         <td
-          className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 max-w-[8rem] truncate'
+          className='hidden px-3 sm:px-6 md:table-cell py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 max-w-[8rem] truncate'
           title={source.detail || '-'}
         >
           {source.detail || '-'}
         </td>
-        <td className='px-6 py-4 whitespace-nowrap max-w-[1rem]'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap max-w-[1rem]'>
           <span
             className={`px-2 py-1 text-xs rounded-full ${
               !source.disabled
@@ -812,7 +812,7 @@ const VideoSourceConfig = ({
             {!source.disabled ? '启用中' : '已禁用'}
           </span>
         </td>
-        <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
           <button
             onClick={() => handleToggleEnable(source.key)}
             className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${
@@ -917,22 +917,22 @@ const VideoSourceConfig = ({
           <thead className='bg-gray-50 dark:bg-gray-900'>
             <tr>
               <th className='w-8' />
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 名称
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 Key
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='hidden px-3 sm:px-6 md:table-cell py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 API 地址
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='hidden px-3 sm:px-6 md:table-cell py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 Detail 地址
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 状态
               </th>
-              <th className='px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 操作
               </th>
             </tr>
@@ -1138,10 +1138,10 @@ const CategoryConfig = ({
         >
           <GripVertical size={16} />
         </td>
-        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
           {category.name || '-'}
         </td>
-        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100'>
           <span
             className={`px-2 py-1 text-xs rounded-full ${
               category.type === 'movie'
@@ -1153,12 +1153,12 @@ const CategoryConfig = ({
           </span>
         </td>
         <td
-          className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 max-w-[12rem] truncate'
+          className='hidden px-3 sm:px-6 md:table-cell py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 max-w-[12rem] truncate'
           title={category.query}
         >
           {category.query}
         </td>
-        <td className='px-6 py-4 whitespace-nowrap max-w-[1rem]'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap max-w-[1rem]'>
           <span
             className={`px-2 py-1 text-xs rounded-full ${
               !category.disabled
@@ -1169,7 +1169,7 @@ const CategoryConfig = ({
             {!category.disabled ? '启用中' : '已禁用'}
           </span>
         </td>
-        <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
+        <td className='px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
           <button
             onClick={() =>
               !isD1Storage &&
@@ -1293,19 +1293,19 @@ const CategoryConfig = ({
           <thead className='bg-gray-50 dark:bg-gray-900'>
             <tr>
               <th className='w-8' />
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 分类名称
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 类型
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='hidden px-3 sm:px-6 md:table-cell py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 搜索关键词
               </th>
-              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 状态
               </th>
-              <th className='px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+              <th className='px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
                 操作
               </th>
             </tr>
@@ -1892,7 +1892,7 @@ function AdminPageClient() {
   if (loading) {
     return (
       <PageLayout activePath='/admin'>
-        <div className='px-2 sm:px-10 py-4 sm:py-8'>
+        <div className='px-3 sm:px-10 py-4 sm:py-8'>
           <div className='max-w-[95%] mx-auto'>
             <h1 className='text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8'>
               管理员设置
@@ -1918,7 +1918,7 @@ function AdminPageClient() {
 
   return (
     <PageLayout activePath='/admin'>
-      <div className='px-2 sm:px-10 py-4 sm:py-8'>
+      <div className='px-3 sm:px-10 py-4 sm:py-8'>
         <div className='max-w-[95%] mx-auto'>
           {/* 标题 + 重置配置按钮 */}
           <div className='flex items-center gap-2 mb-8'>
