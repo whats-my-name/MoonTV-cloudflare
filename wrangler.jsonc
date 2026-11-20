@@ -1,0 +1,35 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lunatv-cf-d1",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-20",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "lunatv-cf-d1"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "moontv",
+      "database_id": "6d9de246-e8e3-44d8-9cf3-5d575b89c7f7"
+    }
+  ],
+  "vars": {
+    "DOCKER_ENV": "false",
+    "NEXT_PUBLIC_STORAGE_TYPE": "d1",
+    "NEXT_PUBLIC_ENABLE_REGISTER": "false",
+    "NEXT_PUBLIC_SEARCH_MAX_PAGE": "5",
+    "SITE_NAME": "LunaTV cf-D1",
+    "USERNAME": "admin"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "LunaTV cf-D1",
+  "short_name": "LunaTV",
+  "description": "Cloudflare Workers + D1 版本",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
